@@ -1,47 +1,23 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 "Singleton Concept Sample Code"
-import copy
-
-class Singleton():
+class Logger:
     "The Singleton Class"
-    value = []
+    _instance = None
 
     def __new__(cls):
-        return cls
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            # Initialization code can go here
+        return cls._instance
 
-    # def __init__(self):
-    #     print("in init")
+    def log(self, message):
+        print(message)
 
-    @staticmethod
-    def static_method():
-        "Use @staticmethod if no inner variables required"
+# client
+logger1 = Logger()
+logger2 = Logger()
 
-    @classmethod
-    def class_method(cls):
-        "Use @classmethod to access class level variables"
-        print(cls.value)
+# test if logger1=logger2
+logger1.log("Hello from logger1")  
+logger2.log("Hello from logger2")  
 
-# The Client
-# All uses of singleton point to the same memory address (id)
-print(f"id(Singleton)\t= {id(Singleton)}")
-
-OBJECT1 = Singleton()
-print(f"id(OBJECT1)\t= {id(OBJECT1)}")
-
-OBJECT2 = copy.deepcopy(OBJECT1)
-print(f"id(OBJECT2)\t= {id(OBJECT2)}")
-
-OBJECT3 = Singleton()
-print(f"id(OBJECT3)\t= {id(OBJECT3)}")
-
-
-# In[ ]:
-
-
-
-
+print(logger1 == logger2)  
